@@ -1,16 +1,18 @@
 package analysis
 
 import (
-	"fmt"
+	"github.com/mjibson/go-dsp/fft"
+	"github.com/youpy/go-wav"
 	"io"
 	"os"
-	"github.com/youpy/go-wav"
 )
 
-func GenerateSpectrogram(filename string)(error){
+func ReadWav(filename string) ([]float64, error) {
+	var sampledata []float64
+
 	file, err := os.Open(filename)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
 	reader := wav.NewReader(file)
@@ -23,9 +25,17 @@ func GenerateSpectrogram(filename string)(error){
 			break
 		}
 		for _, sample := range samples {
-			fmt.Printf("L/R: %d/%d\n", reader.IntValue(sample, 0), reader.IntValue(sample, 1))
+			sampledata = append(sampledata, reader.FloatValue(sample, 0))
+			//fmt.Printf("L/R: %d/%d\n", reader.IntValue(sample, 0), reader.IntValue(sample, 1))
 		}
 	}
 
-	return nil
+	return sampledata, nil
+}
+
+//WavToFFT - returns fourier transform of .wav samples array
+func WavToFFT(sampledata []float64) []complex128 {
+	fftdata := fft.FFTReal(sampledata)
+
+	return fftdata
 }
