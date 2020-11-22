@@ -1,4 +1,4 @@
-package files
+package utils
 
 import (
 	"testing"
@@ -45,7 +45,7 @@ func TestConvertAudio(t *testing.T) {
 	}{
 		{"54e6lBE3BoQ", args{inputfilename: "54e6lBE3BoQ.mp4", videoID: "54e6lBE3BoQ"}, "54e6lBE3BoQ.wav", false},
 		{"n3kPvBCYT3E", args{inputfilename: "n3kPvBCYT3E.mp4", videoID: "n3kPvBCYT3E"}, "n3kPvBCYT3E.wav", false},
-		{"nbxPa9Y39JE", args{inputfilename: "nbxPa9Y39JE.mp4", videoID: "nbxPa9Y39JE"}, "nbxPa9Y39JE.wav",false},
+		{"nbxPa9Y39JE", args{inputfilename: "nbxPa9Y39JE.mp4", videoID: "nbxPa9Y39JE"}, "nbxPa9Y39JE.wav", false},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

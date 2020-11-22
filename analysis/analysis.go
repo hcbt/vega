@@ -7,6 +7,7 @@ import (
 	"os"
 )
 
+//ReadWav - reads .wav file and loads it into array
 func ReadWav(filename string) ([]float64, error) {
 	var sampledata []float64
 

@@ -4,17 +4,17 @@ import (
 	"fmt"
 
 	"github.com/hcbt/vega/analysis"
-	"github.com/hcbt/vega/files"
+	"github.com/hcbt/vega/utils"
 )
 
 func main() {
 	videoID := "kiQtEDrdYDY"
 
 	fmt.Println("Downloading video:", videoID)
-	videofilename, _ := files.DownloadVideo(videoID)
+	videofilename, _ := utils.DownloadVideo(videoID)
 
 	fmt.Println("Converting video to audio:", videoID)
-	audiofilename, _ := files.ConvertAudio(videofilename, videoID)
+	audiofilename, _ := utils.ConvertAudio(videofilename, videoID)
 
 	fmt.Println("Getting samples:", videoID)
 	sampledata, _ := analysis.ReadWav(audiofilename)

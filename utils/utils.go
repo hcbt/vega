@@ -1,16 +1,16 @@
-package files
+package utils
 
 import (
-	"io"
-	"os"
-	"log"
 	"fmt"
-	"github.com/kkdai/youtube/v2"
 	ffmpeg "github.com/floostack/transcoder/ffmpeg"
+	"github.com/kkdai/youtube/v2"
+	"io"
+	"log"
+	"os"
 )
 
 //DownloadVideo - downloads video by id
-func DownloadVideo(videoID string) (string, error){
+func DownloadVideo(videoID string) (string, error) {
 	client := youtube.Client{}
 
 	video, err := client.GetVideo(videoID)
@@ -34,27 +34,27 @@ func DownloadVideo(videoID string) (string, error){
 	if err != nil {
 		return "", err
 	}
-	
+
 	return file.Name(), nil
 }
 
 //ConvertAudio - converts dowloaded youtube video to .wav
-func ConvertAudio(inputfilename string, videoID string) (string, error){
+func ConvertAudio(inputfilename string, videoID string) (string, error) {
 	format := "wav"
 	overwrite := true
 	outputfilename := videoID + ".wav"
 
 	opts := ffmpeg.Options{
 		OutputFormat: &format,
-		Overwrite: &overwrite,
+		Overwrite:    &overwrite,
 	}
 
 	ffmpegConf := &ffmpeg.Config{
-		FfmpegBinPath: "/usr/local/bin/ffmpeg",
-		FfprobeBinPath: "/usr/local/bin/ffprobe",
+		FfmpegBinPath:   "/usr/local/bin/ffmpeg",
+		FfprobeBinPath:  "/usr/local/bin/ffprobe",
 		ProgressEnabled: true,
-	} 
-	
+	}
+
 	progress, err := ffmpeg.
 		New(ffmpegConf).
 		Input(inputfilename).
