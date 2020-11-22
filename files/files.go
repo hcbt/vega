@@ -39,9 +39,10 @@ func DownloadVideo(videoID string) (string, error){
 }
 
 //ConvertAudio - converts dowloaded youtube video to .wav
-func ConvertAudio(inputfilename string, videoID string) (error){
+func ConvertAudio(inputfilename string, videoID string) (string, error){
 	format := "wav"
 	overwrite := true
+	outputfilename := videoID + ".wav"
 
 	opts := ffmpeg.Options{
 		OutputFormat: &format,
@@ -57,12 +58,12 @@ func ConvertAudio(inputfilename string, videoID string) (error){
 	progress, err := ffmpeg.
 		New(ffmpegConf).
 		Input(inputfilename).
-		Output(fmt.Sprintf("%s.wav", videoID)).
+		Output(outputfilename).
 		WithOptions(opts).
 		Start(opts)
 
 	if err != nil {
-		return err
+		return outputfilename, err
 	}
 
 	for msg := range progress {
@@ -71,8 +72,8 @@ func ConvertAudio(inputfilename string, videoID string) (error){
 
 	err = os.Remove(inputfilename)
 	if err != nil {
-		return err
+		return outputfilename, err
 	}
 
-	return nil
+	return outputfilename, nil
 }

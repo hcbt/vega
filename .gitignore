@@ -16,3 +16,6 @@
 
 #ds ignore
 .DS_Store
+
+#ignore .wavs
+.wav
