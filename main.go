@@ -17,12 +17,11 @@ func main() {
 	audiofilename, _ := utils.ConvertAudio(videofilename, videoID)
 
 	fmt.Println("Getting samples:", videoID)
-	sampledata, _ := analysis.ReadWav(audiofilename)
+	ch1, ch2, _ := analysis.ReadWav(audiofilename)
 	fmt.Println("Samples saved:", videoID)
 
-	fmt.Println("Samples to FFT:", videoID)
-	analysis.WavToFFT(sampledata)
-	fmt.Println("FFT saved:", videoID)
-
-	//fmt.Println(sampledata)
+	for value := range ch1 {
+		fmt.Printf("%d %d\n", ch1[value], ch2[value])
+		//fmt.Printf("%d %d\n", value, ch2[value:])
+	}
 }

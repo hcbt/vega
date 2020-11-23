@@ -1,19 +1,20 @@
 package analysis
 
 import (
-	"github.com/mjibson/go-dsp/fft"
-	"github.com/youpy/go-wav"
 	"io"
 	"os"
+
+	"github.com/youpy/go-wav"
 )
 
 //ReadWav - reads .wav file and loads it into array
-func ReadWav(filename string) ([]float64, error) {
-	var sampledata []float64
+func ReadWav(filename string) ([]int, []int, error) {
+	ch1 := []int{}
+	ch2 := []int{}
 
 	file, err := os.Open(filename)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
 	reader := wav.NewReader(file)
@@ -26,17 +27,9 @@ func ReadWav(filename string) ([]float64, error) {
 			break
 		}
 		for _, sample := range samples {
-			sampledata = append(sampledata, reader.FloatValue(sample, 0))
-			//fmt.Printf("L/R: %d/%d\n", reader.IntValue(sample, 0), reader.IntValue(sample, 1))
+			ch1 = append(ch1, reader.IntValue(sample, 0))
+			ch2 = append(ch2, reader.IntValue(sample, 1))
 		}
 	}
-
-	return sampledata, nil
-}
-
-//WavToFFT - returns fourier transform of .wav samples array
-func WavToFFT(sampledata []float64) []complex128 {
-	fftdata := fft.FFTReal(sampledata)
-
-	return fftdata
+	return ch1, ch2, nil
 }
