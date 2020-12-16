@@ -1,27 +1,30 @@
 package main
 
 import (
-	"fmt"
+	//"fmt"
 
 	"github.com/hcbt/vega/analysis"
-	"github.com/hcbt/vega/utils"
+	//"github.com/hcbt/vega/utils"
+	"github.com/hcbt/vega/stft"
+	"github.com/hcbt/vega/plot"
 )
 
 func main() {
-	videoID := "kiQtEDrdYDY"
+	//videoID := "kiQtEDrdYDY"
+	audiofilename := "sine.wav"
 
-	fmt.Println("Downloading video:", videoID)
-	videofilename, _ := utils.DownloadVideo(videoID)
+	//fmt.Println("Downloading video:", videoID)
+	//videofilename, _ := utils.DownloadVideo(videoID)
 
-	fmt.Println("Converting video to audio:", videoID)
-	audiofilename, _ := utils.ConvertAudio(videofilename, videoID)
+	//fmt.Println("Converting video to audio:", videoID)
+	//audiofilename, _ := utils.ConvertAudio(videofilename, videoID)
 
-	fmt.Println("Getting samples:", videoID)
-	ch1, ch2, _ := analysis.ReadWav(audiofilename)
-	fmt.Println("Samples saved:", videoID)
+	//fmt.Println("Getting samples:", videoID)
+	ch1, _, _ := analysis.ReadWav(audiofilename)
 
-	for value := range ch1 {
-		fmt.Printf("%d %d\n", ch1[value], ch2[value])
-		//fmt.Printf("%d %d\n", value, ch2[value:])
-	}
+	//fmt.Println("Converting samples to STFT: ", videoID)
+	values := stft.GenStft(ch1)
+
+	//fmt.Println("Plotting spectrogram: ", videoID)
+	plot.PlotSpectrogram(values)
 }
