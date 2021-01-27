@@ -10,20 +10,11 @@ import (
 //Process processes an api request
 func Process(videoID string) {
 	fmt.Println("Downloading video:", videoID)
-	videofilename, err := utils.DownloadVideo(videoID)
-	if err != nil {
-		fmt.Println(err)
-	}
+	videofilename := utils.DownloadVideo(videoID)
 
 	fmt.Println("Converting video to audio:", videoID)
-	audiofilename, err := utils.ConvertAudio(videofilename, videoID)
-	if err != nil {
-		fmt.Println(err)
-	}
+	audiofilename := utils.ConvertAudio(videofilename, videoID)
 
 	fmt.Println("Drawing spectrogram:", videoID)
-	err = plot.Spectrogram(audiofilename, videoID)
-	if err != nil {
-		fmt.Println(err)
-	}
+	plot.Spectrogram(audiofilename, videoID)
 }

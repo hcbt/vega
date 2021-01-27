@@ -10,36 +10,36 @@ import (
 )
 
 //DownloadVideo - downloads video by id
-func DownloadVideo(videoID string) (string, error) {
+func DownloadVideo(videoID string) (string) {
 	client := youtube.Client{}
 
 	video, err := client.GetVideo(videoID)
 	if err != nil {
-		return "", err
+		log.Fatal(err)
 	}
 
 	resp, err := client.GetStream(video, &video.Formats[0])
 	if err != nil {
-		return "", err
+		log.Fatal(err)
 	}
 	defer resp.Body.Close()
 
 	file, err := os.Create(fmt.Sprintf("%s.mp4", videoID))
 	if err != nil {
-		return "", err
+		log.Fatal(err)
 	}
 	defer file.Close()
 
 	_, err = io.Copy(file, resp.Body)
 	if err != nil {
-		return "", err
+		log.Fatal(err)
 	}
 
-	return file.Name(), nil
+	return file.Name()
 }
 
 //ConvertAudio - converts dowloaded youtube video to .wav
-func ConvertAudio(inputfilename string, videoID string) (string, error) {
+func ConvertAudio(inputfilename string, videoID string) (string) {
 	format := "wav"
 	overwrite := true
 	outputfilename := videoID + ".wav"
@@ -63,7 +63,7 @@ func ConvertAudio(inputfilename string, videoID string) (string, error) {
 		Start(opts)
 
 	if err != nil {
-		return outputfilename, err
+		log.Fatal(err)
 	}
 
 	for msg := range progress {
@@ -72,8 +72,8 @@ func ConvertAudio(inputfilename string, videoID string) (string, error) {
 
 	err = os.Remove(inputfilename)
 	if err != nil {
-		return outputfilename, err
+		log.Fatal(err)
 	}
 
-	return outputfilename, nil
+	return outputfilename
 }
