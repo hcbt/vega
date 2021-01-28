@@ -10,7 +10,7 @@ import (
 )
 
 //DownloadVideo - downloads video by id
-func DownloadVideo(videoID string) (string) {
+func DownloadVideo(videoID string) {
 	client := youtube.Client{}
 
 	video, err := client.GetVideo(videoID)
@@ -34,14 +34,13 @@ func DownloadVideo(videoID string) (string) {
 	if err != nil {
 		log.Fatal(err)
 	}
-
-	return file.Name()
 }
 
 //ConvertAudio - converts dowloaded youtube video to .wav
-func ConvertAudio(inputfilename string, videoID string) (string) {
+func ConvertAudio(videoID string) {
 	format := "wav"
-	overwrite := true
+	overwrite := false
+	inputfilename := videoID + ".mp4"
 	outputfilename := videoID + ".wav"
 
 	opts := ffmpeg.Options{
@@ -74,6 +73,4 @@ func ConvertAudio(inputfilename string, videoID string) (string) {
 	if err != nil {
 		log.Fatal(err)
 	}
-
-	return outputfilename
 }
