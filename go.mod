@@ -25,6 +25,7 @@ require (
 	github.com/thinkerou/favicon v0.1.0
 	github.com/ugorji/go v1.2.3 // indirect
 	github.com/youpy/go-wav v0.1.0
+	go.mongodb.org/mongo-driver v1.4.5
 	golang.org/x/crypto v0.0.0-20201221181555-eec23a3978ad // indirect
 	golang.org/x/exp v0.0.0-20201221025956-e89b829e73ea // indirect
 	golang.org/x/oauth2 v0.0.0-20210113205817-d3ed898aa8a3 // indirect
